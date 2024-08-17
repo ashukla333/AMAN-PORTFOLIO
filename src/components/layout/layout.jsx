@@ -12,9 +12,9 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Headers />
-      <main className="flex-1 bg-gray-100 p-4">{children}</main>
-      <Footer />
+      {/* <Headers /> */}
+      <main className="flex-1 bg-gray-100 ">{children}</main>
+      {/* <Footer /> */}
     </div>
   );
 }
