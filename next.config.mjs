@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["localhost"],
+    domains: ["localhost","via.placeholder.com"],
   },
   env: {
     BASE_URL: process.env.BASE_URL,

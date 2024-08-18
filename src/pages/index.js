@@ -1,25 +1,54 @@
 import { useState, useEffect, useRef } from "react";
 import { Inter } from "next/font/google";
-import { FaUser, FaSuitcase, FaFileAlt } from 'react-icons/fa';
+import { motion, useAnimation } from "framer-motion";
+import { FaUser, FaProjectDiagram, FaListAlt } from "react-icons/fa";
+import { useInView } from "react-intersection-observer";
+import Image from 'next/image';
 
 const inter = Inter({ subsets: ["latin"] });
 
+const tabItems = [
+  { id: "profile", label: "Profile", icon: <FaUser /> },
+  { id: "projects", label: "Projects", icon: <FaProjectDiagram /> },
+  { id: "hobbies", label: "Hobbies", icon: <FaListAlt /> },
+];
+
+const animations = {
+  fadeIn: { opacity: 1, transition: { duration: 0.5 } },
+  fadeOut: { opacity: 0, transition: { duration: 0.5 } },
+  slideUp: { y: 0, opacity: 1, transition: { duration: 0.5 } },
+  slideDown: { y: 20, opacity: 0, transition: { duration: 0.5 } },
+  scaleUp: { scale: 1, opacity: 1, transition: { duration: 0.3 } },
+  scaleDown: { scale: 0.9, opacity: 0.7, transition: { duration: 0.3 } }
+};
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState("profile");
-  const profileRef = useRef(null);
-  const portfolioRef = useRef(null);
-  const resumeRef = useRef(null);
+
+  const profileControls = useAnimation();
+  const projectsControls = useAnimation();
+  const hobbiesControls = useAnimation();
+
+  const { ref: profileRef, inView: profileInView } = useInView({ triggerOnce: true });
+  const { ref: projectsRef, inView: projectsInView } = useInView({ triggerOnce: true });
+  const { ref: hobbiesRef, inView: hobbiesInView } = useInView({ triggerOnce: true });
+
+  useEffect(() => {
+    profileControls.start(profileInView ? animations.fadeIn : animations.fadeOut);
+    projectsControls.start(projectsInView ? animations.fadeIn : animations.fadeOut);
+    hobbiesControls.start(hobbiesInView ? animations.fadeIn : animations.fadeOut);
+  }, [profileInView, projectsInView, hobbiesInView, profileControls, projectsControls, hobbiesControls]);
 
   useEffect(() => {
     const handleScroll = () => {
-      const profilePos = profileRef.current.getBoundingClientRect().top;
-      const portfolioPos = portfolioRef.current.getBoundingClientRect().top;
-      const resumePos = resumeRef.current.getBoundingClientRect().top;
+      const profilePos = profileRef.current?.getBoundingClientRect().top;
+      const projectsPos = projectsRef.current?.getBoundingClientRect().top;
+      const hobbiesPos = hobbiesRef.current?.getBoundingClientRect().top;
 
-      if (resumePos < window.innerHeight && resumePos > 0) {
-        setActiveTab("resume");
-      } else if (portfolioPos < window.innerHeight && portfolioPos > 0) {
-        setActiveTab("portfolio");
+      if (hobbiesPos < window.innerHeight && hobbiesPos > 0) {
+        setActiveTab("hobbies");
+      } else if (projectsPos < window.innerHeight && projectsPos > 0) {
+        setActiveTab("projects");
       } else if (profilePos < window.innerHeight && profilePos > 0) {
         setActiveTab("profile");
       }
@@ -27,163 +56,147 @@ export default function Home() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [profileRef, projectsRef, hobbiesRef]);
 
   return (
-    <div className={`${inter.className} bg-gray-900 text-white`}>
-      <main className="relative min-h-screen flex flex-col lg:flex-row">
-        {/* Floating Tab Bar */}
-        <aside className="fixed top-0 left-0 z-50 w-16 md:w-20 lg:w-24 bg-black text-white h-screen flex flex-col items-center py-4 shadow-lg">
-          <div className="flex flex-col items-center space-y-6">
+    <div className={`${inter.className} bg-gray-900 text-white min-h-screen flex`}>
+      {/* Left Side Tab Bar */}
+      <aside className="w-1/6 bg-black text-white h-screen fixed top-0 left-0 flex flex-col items-center py-4">
+        <div className="flex flex-col space-y-4 w-full">
+          {tabItems.map((item) => (
             <div
-              className={`p-3 cursor-pointer rounded-full transition-transform duration-300 ${
-                activeTab === "profile" ? "bg-gray-800 transform scale-125" : "hover:bg-gray-700"
+              key={item.id}
+              className={`p-4 cursor-pointer rounded-full transition duration-300 flex flex-col items-center ${
+                activeTab === item.id ? "bg-gray-800" : "hover:bg-gray-700"
               }`}
               onClick={() => {
-                setActiveTab("profile");
-                profileRef.current.scrollIntoView({ behavior: "smooth" });
+                document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
+                setActiveTab(item.id);
               }}
             >
-              <FaUser className="w-8 h-8" />
-              <span className="text-xs mt-2">Profile</span>
+              <div className="text-xl">{item.icon}</div>
+              <span className="text-xs mt-2">{item.label}</span>
             </div>
-            <div
-              className={`p-3 cursor-pointer rounded-full transition-transform duration-300 ${
-                activeTab === "portfolio" ? "bg-gray-800 transform scale-125" : "hover:bg-gray-700"
-              }`}
-              onClick={() => {
-                setActiveTab("portfolio");
-                portfolioRef.current.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              <FaSuitcase className="w-8 h-8" />
-              <span className="text-xs mt-2">Portfolio</span>
-            </div>
-            <div
-              className={`p-3 cursor-pointer rounded-full transition-transform duration-300 ${
-                activeTab === "resume" ? "bg-gray-800 transform scale-125" : "hover:bg-gray-700"
-              }`}
-              onClick={() => {
-                setActiveTab("resume");
-                resumeRef.current.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              <FaFileAlt className="w-8 h-8" />
-              <span className="text-xs mt-2">Resume</span>
-            </div>
-          </div>
-        </aside>
-
-        {/* Main Content */}
-        <div className="flex-1 lg:ml-24 lg:mt-16 p-6">
-          {/* Top Section - Banner with Parallax Scrolling */}
-          <section className="relative h-96 bg-blue-700 text-white flex items-center justify-center overflow-hidden bg-fixed">
-            <div className="absolute inset-0 bg-black opacity-40" />
-            <div className="relative z-10 flex items-center justify-center">
-              <h1 className="text-5xl font-bold transform translate-y-[-50px] animate-bannerText">Welcome to My Portfolio</h1>
-            </div>
-          </section>
-
-          {/* Content Sections */}
-          <div className="mt-12">
-            {/* Profile Section */}
-            <section ref={profileRef} className="bg-black text-white p-8 rounded-lg shadow-lg mb-12 animate-fadeIn">
-              <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-                <img
-                  src="https://via.placeholder.com/120"
-                  alt="Profile Picture"
-                  className="w-40 h-40 rounded-full border-4 border-gray-800 shadow-lg"
-                />
-                <div>
-                  <h1 className="text-4xl font-bold">User Name</h1>
-                  <p className="text-gray-400 mt-2">Short bio or title about the user. Enthusiastic web developer with a passion for creating engaging user experiences.</p>
-                </div>
-              </div>
-            </section>
-
-            {/* Portfolio Section */}
-            <section ref={portfolioRef} className="animate-slideIn mb-12">
-              <h2 className="text-3xl font-semibold mb-6 text-gray-300">Portfolio</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {/* Example Portfolio Items */}
-                <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <h3 className="text-xl font-semibold mb-2 text-gray-800">Project 1</h3>
-                  <p className="text-gray-600">Description of project 1. Showcasing innovative solutions and creative designs.</p>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <h3 className="text-xl font-semibold mb-2 text-gray-800">Project 2</h3>
-                  <p className="text-gray-600">Description of project 2. Emphasizing functionality and user experience.</p>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <h3 className="text-xl font-semibold mb-2 text-gray-800">Project 3</h3>
-                  <p className="text-gray-600">Description of project 3. Highlighting key achievements and impactful solutions.</p>
-                </div>
-              </div>
-            </section>
-
-            {/* Resume Section */}
-            <section ref={resumeRef} className="animate-slideIn">
-              <h2 className="text-3xl font-semibold mb-8 text-gray-300">Resume</h2>
-              <div className="space-y-10">
-                {/* Skills */}
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Skills</h3>
-                  <div className="flex flex-wrap gap-4">
-                    <span className="bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg">JavaScript</span>
-                    <span className="bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg">React</span>
-                    <span className="bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg">Node.js</span>
-                    {/* Add more skills as needed */}
-                  </div>
-                </div>
-
-                {/* Qualifications */}
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Qualifications</h3>
-                  <ul className="list-disc list-inside space-y-2 text-gray-300">
-                    <li>Bachelors Degree in Computer Science</li>
-                    <li>Certified Web Developer</li>
-                    {/* Add more qualifications as needed */}
-                  </ul>
-                </div>
-
-                {/* Unique Attributes */}
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Unique Attributes</h3>
-                  <p className="text-gray-300">Passionate about technology, problem-solving, and continuous learning.</p>
-                </div>
-
-                {/* Cards */}
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Cards</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                      <h4 className="text-lg font-semibold mb-2 text-gray-800">Card Title 1</h4>
-                      <p className="text-gray-600">Card description 1 with engaging content and visuals.</p>
-                    </div>
-                    <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                      <h4 className="text-lg font-semibold mb-2 text-gray-800">Card Title 2</h4>
-                      <p className="text-gray-600">Card description 2 showcasing unique attributes.</p>
-                    </div>
-                    {/* Add more cards as needed */}
-                  </div>
-                </div>
-
-                {/* Interests */}
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Interests</h3>
-                  <p className="text-gray-300">Web development, design, and open-source projects.</p>
-                </div>
-
-                {/* Hobbies */}
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Hobbies</h3>
-                  <p className="text-gray-300">Photography, hiking, and reading tech blogs.</p>
-                </div>
-              </div>
-            </section>
-          </div>
+          ))}
         </div>
-      </main>
+      </aside>
+
+      {/* Main Content */}
+      <div className="w-5/6 ml-auto p-6">
+        {/* Top Section - Banner */}
+        <section className="relative bg-gray-800 text-white h-64 flex items-center justify-center mb-6 overflow-hidden">
+          <Image
+            src="https://via.placeholder.com/1200x400"
+            alt="Banner"
+            layout="fill"
+            objectFit="cover"
+            className="absolute inset-0 opacity-50"
+          />
+          <motion.div
+            className="relative z-10 p-6 bg-black bg-opacity-70 rounded-lg"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-4xl font-bold">Welcome to My Portfolio</h1>
+            <p className="text-lg mt-2">Showcasing my skills, projects, and more.</p>
+          </motion.div>
+        </section>
+
+        {/* Profile Section */}
+        <motion.section id="profile" ref={profileRef} animate={profileControls} initial={animations.fadeOut} className="bg-black text-white p-6 rounded-lg shadow-lg mb-6">
+          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+            <Image
+              src="https://via.placeholder.com/120"
+              alt="Profile Picture"
+              width={120}
+              height={120}
+              className="rounded-full border-4 border-gray-800"
+            />
+            <div>
+              <h1 className="text-3xl font-semibold">User Name</h1>
+              <p className="text-gray-400">Short bio or title about the user.</p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Projects Section */}
+        <motion.section id="projects" ref={projectsRef} animate={projectsControls} initial={animations.fadeOut} className="mb-6">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-300">Projects</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {/* Example Project Cards */}
+            <motion.div
+              className="relative bg-gray-800 text-white p-6 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-transform duration-300 transform hover:scale-105 group"
+              initial={animations.slideDown}
+              whileInView={animations.slideUp}
+              viewport={{ once: true }}
+            >
+              <Image
+                src="https://via.placeholder.com/400x250"
+                alt="Project 1"
+                width={400}
+                height={250}
+                className="w-full h-40 object-cover mb-4 rounded-lg"
+              />
+              <h3 className="text-xl font-semibold mb-2">Project 1</h3>
+              <p>Description of project 1.</p>
+
+              {/* Buttons */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-70">
+                <a href="#" className="text-white py-2 px-4 rounded-lg border border-white mx-2 hover:bg-gray-700 transition-colors duration-300">Visit Website</a>
+                <a href="#" className="text-white py-2 px-4 rounded-lg border border-white mx-2 hover:bg-gray-700 transition-colors duration-300">Source Code</a>
+              </div>
+            </motion.div>
+            <motion.div
+              className="relative bg-gray-800 text-white p-6 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-transform duration-300 transform hover:scale-105 group"
+              initial={animations.slideDown}
+              whileInView={animations.slideUp}
+              viewport={{ once: true }}
+            >
+              <Image
+                src="https://via.placeholder.com/400x250"
+                alt="Project 2"
+                width={400}
+                height={250}
+                className="w-full h-40 object-cover mb-4 rounded-lg"
+              />
+              <h3 className="text-xl font-semibold mb-2">Project 2</h3>
+              <p>Description of project 2.</p>
+
+              {/* Buttons */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-70">
+                <a href="#" className="text-white py-2 px-4 rounded-lg border border-white mx-2 hover:bg-gray-700 transition-colors duration-300">Visit Website</a>
+                <a href="#" className="text-white py-2 px-4 rounded-lg border border-white mx-2 hover:bg-gray-700 transition-colors duration-300">Source Code</a>
+              </div>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Hobbies Section */}
+        <motion.section id="hobbies" ref={hobbiesRef} animate={hobbiesControls} initial={animations.fadeOut}>
+          <h2 className="text-2xl font-semibold mb-4 text-gray-300">Hobbies</h2>
+          <div className="space-y-4">
+            <motion.div
+              className="bg-gray-800 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform duration-300 transform hover:scale-105"
+              initial={animations.slideDown}
+              whileInView={animations.slideUp}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-xl font-semibold mb-2">Hobby 1</h3>
+              <p>Description of hobby 1.</p>
+            </motion.div>
+            <motion.div
+              className="bg-gray-800 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform duration-300 transform hover:scale-105"
+              initial={animations.slideDown}
+              whileInView={animations.slideUp}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-xl font-semibold mb-2">Hobby 2</h3>
+              <p>Description of hobby 2.</p>
+            </motion.div>
+          </div>
+        </motion.section>
+      </div>
     </div>
   );
 }
