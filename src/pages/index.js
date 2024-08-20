@@ -230,7 +230,7 @@ export default function Home() {
       className={`${inter.className} bg-white playfair-display text-black min-h-screen flex`}
     >
       {/* Left Side Tab Bar */}
-      <aside className="w-[18%]  overflow-y-scroll scrollbar-hide  text-gray-800 border-r-2 border-black bg-white h-screen fixed top-0 left-0 flex flex-col items-center py-4">
+      <aside className="w-[18%]  overflow-y-scroll bg-black scrollbar-hide  text-gray-800 border-r-2 border-black  h-screen fixed top-0 left-0 flex flex-col items-center py-4">
         {/* Profile Section */}
         <motion.section
           id="profile"
@@ -247,7 +247,7 @@ export default function Home() {
               height={1000}
               className="rounded-full h-20 md:block hidden w-20 border-2 border-gray-800 object-cover"
             />
-            <h1 className="text-xl font-bold  md:block hidden">Aman Shukla</h1>
+            <h1 className="text-xl font-bold text-white  md:block hidden">Aman Shukla</h1>
             <span className="bg-clip-text md:block hidden md:text-sm text-base lg:text-lg animate-pulse text-transparent bg-gradient-to-r from-amber-400 via-red-500 to-pink-500">
           Frontend Developer
           </span>
@@ -257,8 +257,8 @@ export default function Home() {
               <motion.a
                 key={index}
                 href={item.url}
-                whileHover={{ scale: 1.2, color: "#000" }}
-                className="text-gray-600 text-xl"
+                whileHover={{ scale: 1.2, color: "#3eb489" }}
+                className="text-gray-200 text-xl"
               >
                 {item.icon}
               </motion.a>
@@ -275,7 +275,7 @@ export default function Home() {
               className={`flex items-center rounded-sm border-2  gap-3  font-semibold px-2 py-2 w-full ${
                 activeTab === tab.id
                   ? "bg-black   border-gray-200  text-white"
-                  : "hover:bg-gray-200   text-gray-800"
+                  : "hover:bg-gray-800 text-white  "
               }`}
             >
               <span>{tab.icon}</span>
