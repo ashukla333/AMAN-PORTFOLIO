@@ -40,6 +40,12 @@ body {
   font-variation-settings: "wdth" 100;
 }
 
+.lato-bold-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
 /* Banner Animation */
 @keyframes bannerText {
   0% {
@@ -84,4 +90,32 @@ body {
 
 .animate-slideIn {
   animation: slideIn 1s ease-out;
+}
+
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hover-effect {
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.hover-effect:hover {
+  transform: scale(0.9);
+  opacity: 0.8;
+}
+
+
+.playfair-display {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight:500;
+  font-style: normal;
 }

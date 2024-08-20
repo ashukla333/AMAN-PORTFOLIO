@@ -1,202 +1,380 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Inter } from "next/font/google";
 import { motion, useAnimation } from "framer-motion";
-import { FaUser, FaProjectDiagram, FaListAlt } from "react-icons/fa";
+import {
+  FaUser,
+  FaProjectDiagram,
+  FaListAlt,
+  FaCode,
+  FaHtml5,
+  FaCss3Alt,
+  FaReact,
+  FaNodeJs,
+  FaGit,
+  FaDatabase,
+  FaJsSquare,
+  FaBootstrap,
+  FaHome,
+  FaBriefcase,
+  FaAddressCard,
+  FaPhoneAlt,
+  FaRegEnvelope,
+  FaFacebookF,
+  FaTwitter,
+  FaLinkedinIn,
+  FaGithub,
+} from "react-icons/fa";
+import { SiExpress, SiNextdotjs, SiTailwindcss } from "react-icons/si";
 import { useInView } from "react-intersection-observer";
-import Image from 'next/image';
+import Image from "next/image";
+import HomePage from "@/components/RightSection/HomePage";
+import About from "@/components/RightSection/About";
+import Skills from "@/components/RightSection/Skills";
+import Resume from "@/components/RightSection/Resume";
+import PortFolio from "@/components/RightSection/PortFolio";
+import Services from "@/components/RightSection/Services";
+import Testimonial from "@/components/RightSection/Testimonial";
+import Contact from "@/components/RightSection/Contact";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const tabItems = [
-  { id: "profile", label: "Profile", icon: <FaUser /> },
-  { id: "projects", label: "Projects", icon: <FaProjectDiagram /> },
-  { id: "hobbies", label: "Hobbies", icon: <FaListAlt /> },
+  { id: "home", label: "Home", icon: <FaHome /> },
+  { id: "about", label: "About", icon: <FaUser /> },
+  { id: "skills", label: "Skills", icon: <FaCode /> },
+  { id: "resume", label: "Resume", icon: <FaBriefcase /> },
+  { id: "portfolio", label: "Portfolio", icon: <FaProjectDiagram /> },
+  { id: "services", label: "Services", icon: <FaListAlt /> },
+  { id: "testimonial", label: "Testimonial", icon: <FaAddressCard /> },
+  { id: "contact", label: "Contact", icon: <FaPhoneAlt /> },
 ];
 
 const animations = {
   fadeIn: { opacity: 1, transition: { duration: 0.5 } },
   fadeOut: { opacity: 0, transition: { duration: 0.5 } },
-  slideUp: { y: 0, opacity: 1, transition: { duration: 0.5 } },
-  slideDown: { y: 20, opacity: 0, transition: { duration: 0.5 } },
-  scaleUp: { scale: 1, opacity: 1, transition: { duration: 0.3 } },
-  scaleDown: { scale: 0.9, opacity: 0.7, transition: { duration: 0.3 } }
 };
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState("profile");
+  const [activeTab, setActiveTab] = useState("home");
 
   const profileControls = useAnimation();
-  const projectsControls = useAnimation();
-  const hobbiesControls = useAnimation();
+  const homeControls = useAnimation();
+  const aboutControls = useAnimation();
+  const skillsControls = useAnimation();
+  const resumeControls = useAnimation();
+  const portfolioControls = useAnimation();
+  const servicesControls = useAnimation();
+  const testimonialControls = useAnimation();
+  const contactControls = useAnimation();
 
-  const { ref: profileRef, inView: profileInView } = useInView({ triggerOnce: true });
-  const { ref: projectsRef, inView: projectsInView } = useInView({ triggerOnce: true });
-  const { ref: hobbiesRef, inView: hobbiesInView } = useInView({ triggerOnce: true });
+  const { ref: homeRef, inView: homeInView } = useInView({ triggerOnce: true });
+  const { ref: aboutRef, inView: aboutInView } = useInView({
+    triggerOnce: true,
+  });
+  const { ref: skillsRef, inView: skillsInView } = useInView({
+    triggerOnce: true,
+  });
+  const { ref: resumeRef, inView: resumeInView } = useInView({
+    triggerOnce: true,
+  });
+  const { ref: portfolioRef, inView: portfolioInView } = useInView({
+    triggerOnce: true,
+  });
+  const { ref: servicesRef, inView: servicesInView } = useInView({
+    triggerOnce: true,
+  });
+  const { ref: testimonialRef, inView: testimonialInView } = useInView({
+    triggerOnce: true,
+  });
+  const { ref: contactRef, inView: contactInView } = useInView({
+    triggerOnce: true,
+  });
 
   useEffect(() => {
-    profileControls.start(profileInView ? animations.fadeIn : animations.fadeOut);
-    projectsControls.start(projectsInView ? animations.fadeIn : animations.fadeOut);
-    hobbiesControls.start(hobbiesInView ? animations.fadeIn : animations.fadeOut);
-  }, [profileInView, projectsInView, hobbiesInView, profileControls, projectsControls, hobbiesControls]);
+    profileControls.start(homeInView ? animations.fadeIn : animations.fadeOut);
+    homeControls.start(homeInView ? animations.fadeIn : animations.fadeOut);
+    aboutControls.start(aboutInView ? animations.fadeIn : animations.fadeOut);
+    skillsControls.start(skillsInView ? animations.fadeIn : animations.fadeOut);
+    resumeControls.start(resumeInView ? animations.fadeIn : animations.fadeOut);
+    portfolioControls.start(
+      portfolioInView ? animations.fadeIn : animations.fadeOut
+    );
+    servicesControls.start(
+      servicesInView ? animations.fadeIn : animations.fadeOut
+    );
+    testimonialControls.start(
+      testimonialInView ? animations.fadeIn : animations.fadeOut
+    );
+    contactControls.start(
+      contactInView ? animations.fadeIn : animations.fadeOut
+    );
+  }, [
+    homeInView,
+    aboutInView,
+    skillsInView,
+    resumeInView,
+    portfolioInView,
+    servicesInView,
+    testimonialInView,
+    contactInView,
+    homeControls,
+    aboutControls,
+    skillsControls,
+    resumeControls,
+    portfolioControls,
+    servicesControls,
+    testimonialControls,
+    contactControls,
+    profileControls,
+  ]);
 
   useEffect(() => {
     const handleScroll = () => {
-      const profilePos = profileRef.current?.getBoundingClientRect().top;
-      const projectsPos = projectsRef.current?.getBoundingClientRect().top;
-      const hobbiesPos = hobbiesRef.current?.getBoundingClientRect().top;
+      const homePos = homeRef.current?.getBoundingClientRect().top;
+      const aboutPos = aboutRef.current?.getBoundingClientRect().top;
+      const skillsPos = skillsRef.current?.getBoundingClientRect().top;
+      const resumePos = resumeRef.current?.getBoundingClientRect().top;
+      const portfolioPos = portfolioRef.current?.getBoundingClientRect().top;
+      const servicesPos = servicesRef.current?.getBoundingClientRect().top;
+      const testimonialPos =
+        testimonialRef.current?.getBoundingClientRect().top;
+      const contactPos = contactRef.current?.getBoundingClientRect().top;
 
-      if (hobbiesPos < window.innerHeight && hobbiesPos > 0) {
-        setActiveTab("hobbies");
-      } else if (projectsPos < window.innerHeight && projectsPos > 0) {
-        setActiveTab("projects");
-      } else if (profilePos < window.innerHeight && profilePos > 0) {
-        setActiveTab("profile");
+      if (contactPos < window.innerHeight && contactPos > 0) {
+        setActiveTab("contact");
+      } else if (testimonialPos < window.innerHeight && testimonialPos > 0) {
+        setActiveTab("testimonial");
+      } else if (servicesPos < window.innerHeight && servicesPos > 0) {
+        setActiveTab("services");
+      } else if (portfolioPos < window.innerHeight && portfolioPos > 0) {
+        setActiveTab("portfolio");
+      } else if (resumePos < window.innerHeight && resumePos > 0) {
+        setActiveTab("resume");
+      } else if (skillsPos < window.innerHeight && skillsPos > 0) {
+        setActiveTab("skills");
+      } else if (aboutPos < window.innerHeight && aboutPos > 0) {
+        setActiveTab("about");
+      } else if (homePos < window.innerHeight && homePos > 0) {
+        setActiveTab("home");
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [profileRef, projectsRef, hobbiesRef]);
+  }, [
+    homeRef,
+    aboutRef,
+    skillsRef,
+    resumeRef,
+    portfolioRef,
+    servicesRef,
+    testimonialRef,
+    contactRef,
+  ]);
+
+  const skills = [
+    { icon: <FaHtml5 className="text-red-600" />, label: "HTML", level: 90 },
+    { icon: <FaCss3Alt className="text-blue-600" />, label: "CSS", level: 75 },
+    {
+      icon: <FaReact className="text-blue-400" />,
+      label: "React.js",
+      level: 80,
+    },
+    {
+      icon: <FaNodeJs className="text-green-600" />,
+      label: "Node.js",
+      level: 60,
+    },
+    { icon: <FaGit className="text-orange-600" />, label: "Git", level: 70 },
+    {
+      icon: <FaDatabase className="text-yellow-500" />,
+      label: "MongoDB",
+      level: 60,
+    },
+    {
+      icon: <FaJsSquare className="text-yellow-600" />,
+      label: "JavaScript",
+      level: 80,
+    },
+    {
+      icon: <FaBootstrap className="text-purple-600" />,
+      label: "Bootstrap",
+      level: 75,
+    },
+    {
+      icon: <SiTailwindcss className="text-teal-500" />,
+      label: "Tailwind CSS",
+      level: 85,
+    },
+    {
+      icon: <SiNextdotjs className="text-black" />,
+      label: "Next.js",
+      level: 75,
+    },
+    {
+      icon: <SiExpress className="text-gray-400" />,
+      label: "Express.js",
+      level: 55,
+    },
+  ];
+
+  const socialMedia = [
+    { icon: <FaFacebookF />, url: "#" },
+    { icon: <FaTwitter />, url: "#" },
+    { icon: <FaLinkedinIn />, url: "#" },
+    { icon: <FaGithub />, url: "#" },
+  ];
 
   return (
-    <div className={`${inter.className} bg-gray-900 text-white min-h-screen flex`}>
+    <div
+      className={`${inter.className} bg-white playfair-display text-black min-h-screen flex`}
+    >
       {/* Left Side Tab Bar */}
-      <aside className="w-1/6 bg-black text-white h-screen fixed top-0 left-0 flex flex-col items-center py-4">
-        <div className="flex flex-col space-y-4 w-full">
-          {tabItems.map((item) => (
-            <div
-              key={item.id}
-              className={`p-4 cursor-pointer rounded-full transition duration-300 flex flex-col items-center ${
-                activeTab === item.id ? "bg-gray-800" : "hover:bg-gray-700"
+      <aside className="w-[18%]  overflow-y-scroll scrollbar-hide  text-gray-800 border-r-2 border-black bg-white h-screen fixed top-0 left-0 flex flex-col items-center py-4">
+        {/* Profile Section */}
+        <motion.section
+          id="profile"
+          ref={homeRef}
+          animate={homeControls}
+          initial={animations.fadeOut}
+          className="flex flex-col gap-2"
+        >
+          <div className="flex flex-col gap-3 md:flex-col items-center">
+            <Image
+              src="/aman.jpg"
+              alt="Profile Picture"
+              width={1000}
+              height={1000}
+              className="rounded-full h-20 md:block hidden w-20 border-2 border-gray-800 object-cover"
+            />
+            <h1 className="text-xl font-bold  md:block hidden">Aman Shukla</h1>
+            <span className="bg-clip-text md:block hidden md:text-sm text-base lg:text-lg animate-pulse text-transparent bg-gradient-to-r from-amber-400 via-red-500 to-pink-500">
+          Frontend Developer
+          </span>
+          </div>
+          <div className="flex md:flex-row flex-col gap-4 md:mt-4 justify-center">
+            {socialMedia.map((item, index) => (
+              <motion.a
+                key={index}
+                href={item.url}
+                whileHover={{ scale: 1.2, color: "#000" }}
+                className="text-gray-600 text-xl"
+              >
+                {item.icon}
+              </motion.a>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Tab Navigation */}
+        <nav className="flex flex-col gap-4 mt-8">
+          {tabItems.map((tab) => (
+            <motion.button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center rounded-sm border-2  gap-3  font-semibold px-2 py-2 w-full ${
+                activeTab === tab.id
+                  ? "bg-black   border-gray-200  text-white"
+                  : "hover:bg-gray-200   text-gray-800"
               }`}
-              onClick={() => {
-                document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
-                setActiveTab(item.id);
-              }}
             >
-              <div className="text-xl">{item.icon}</div>
-              <span className="text-xs mt-2">{item.label}</span>
-            </div>
+              <span>{tab.icon}</span>
+              <span className="md:block text-[13px]   hidden">{tab.label}</span>
+            </motion.button>
           ))}
-        </div>
+        </nav>
       </aside>
 
-      {/* Main Content */}
-      <div className="w-5/6 ml-auto p-6">
-        {/* Top Section - Banner */}
-        <section className="relative bg-gray-800 text-white h-64 flex items-center justify-center mb-6 overflow-hidden">
-          <Image
-            src="https://via.placeholder.com/1200x400"
-            alt="Banner"
-            layout="fill"
-            objectFit="cover"
-            className="absolute inset-0 opacity-50"
-          />
-          <motion.div
-            className="relative z-10 p-6 bg-black bg-opacity-70 rounded-lg"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1 className="text-4xl font-bold">Welcome to My Portfolio</h1>
-            <p className="text-lg mt-2">Showcasing my skills, projects, and more.</p>
-          </motion.div>
-        </section>
+      {/* Right Side Content */}
+      <main className="w-[82%] ml-auto bg-gray-50 ">
+        <motion.section
+          id="home"
+          ref={homeRef}
+          animate={homeControls}
+          initial={animations.fadeOut}
+          className={` ${activeTab === "home" ? "" : "hidden"}`}
+        >
+          <HomePage />
+        </motion.section>
 
-        {/* Profile Section */}
-        <motion.section id="profile" ref={profileRef} animate={profileControls} initial={animations.fadeOut} className="bg-black text-white p-6 rounded-lg shadow-lg mb-6">
-          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-            <Image
-              src="https://via.placeholder.com/120"
-              alt="Profile Picture"
-              width={120}
-              height={120}
-              className="rounded-full border-4 border-gray-800"
-            />
-            <div>
-              <h1 className="text-3xl font-semibold">User Name</h1>
-              <p className="text-gray-400">Short bio or title about the user.</p>
-            </div>
+        <motion.section
+          id="about"
+          ref={aboutRef}
+          animate={aboutControls}
+          initial={animations.fadeOut}
+          className={`p-6 ${activeTab === "about" ? "" : "hidden"}`}
+        >
+          <About />
+        </motion.section>
+
+        <motion.section
+          id="skills"
+          ref={skillsRef}
+          animate={skillsControls}
+          initial={animations.fadeOut}
+          className={`p-6 ${activeTab === "skills" ? "" : "hidden"}`}
+        >
+          <div>
+            <Skills skills={skills} />
           </div>
         </motion.section>
 
-        {/* Projects Section */}
-        <motion.section id="projects" ref={projectsRef} animate={projectsControls} initial={animations.fadeOut} className="mb-6">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-300">Projects</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {/* Example Project Cards */}
-            <motion.div
-              className="relative bg-gray-800 text-white p-6 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-transform duration-300 transform hover:scale-105 group"
-              initial={animations.slideDown}
-              whileInView={animations.slideUp}
-              viewport={{ once: true }}
-            >
-              <Image
-                src="https://via.placeholder.com/400x250"
-                alt="Project 1"
-                width={400}
-                height={250}
-                className="w-full h-40 object-cover mb-4 rounded-lg"
-              />
-              <h3 className="text-xl font-semibold mb-2">Project 1</h3>
-              <p>Description of project 1.</p>
-
-              {/* Buttons */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-70">
-                <a href="#" className="text-white py-2 px-4 rounded-lg border border-white mx-2 hover:bg-gray-700 transition-colors duration-300">Visit Website</a>
-                <a href="#" className="text-white py-2 px-4 rounded-lg border border-white mx-2 hover:bg-gray-700 transition-colors duration-300">Source Code</a>
-              </div>
-            </motion.div>
-            <motion.div
-              className="relative bg-gray-800 text-white p-6 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-transform duration-300 transform hover:scale-105 group"
-              initial={animations.slideDown}
-              whileInView={animations.slideUp}
-              viewport={{ once: true }}
-            >
-              <Image
-                src="https://via.placeholder.com/400x250"
-                alt="Project 2"
-                width={400}
-                height={250}
-                className="w-full h-40 object-cover mb-4 rounded-lg"
-              />
-              <h3 className="text-xl font-semibold mb-2">Project 2</h3>
-              <p>Description of project 2.</p>
-
-              {/* Buttons */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-70">
-                <a href="#" className="text-white py-2 px-4 rounded-lg border border-white mx-2 hover:bg-gray-700 transition-colors duration-300">Visit Website</a>
-                <a href="#" className="text-white py-2 px-4 rounded-lg border border-white mx-2 hover:bg-gray-700 transition-colors duration-300">Source Code</a>
-              </div>
-            </motion.div>
+        <motion.section
+          id="resume"
+          ref={resumeRef}
+          animate={resumeControls}
+          initial={animations.fadeOut}
+          className={`p-6 ${activeTab === "resume" ? "" : "hidden"}`}
+        >
+          <div>
+            <Resume />
           </div>
         </motion.section>
 
-        {/* Hobbies Section */}
-        <motion.section id="hobbies" ref={hobbiesRef} animate={hobbiesControls} initial={animations.fadeOut}>
-          <h2 className="text-2xl font-semibold mb-4 text-gray-300">Hobbies</h2>
-          <div className="space-y-4">
-            <motion.div
-              className="bg-gray-800 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform duration-300 transform hover:scale-105"
-              initial={animations.slideDown}
-              whileInView={animations.slideUp}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-xl font-semibold mb-2">Hobby 1</h3>
-              <p>Description of hobby 1.</p>
-            </motion.div>
-            <motion.div
-              className="bg-gray-800 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform duration-300 transform hover:scale-105"
-              initial={animations.slideDown}
-              whileInView={animations.slideUp}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-xl font-semibold mb-2">Hobby 2</h3>
-              <p>Description of hobby 2.</p>
-            </motion.div>
+        <motion.section
+          id="portfolio"
+          ref={portfolioRef}
+          animate={portfolioControls}
+          initial={animations.fadeOut}
+          className={`p-6 ${activeTab === "portfolio" ? "" : "hidden"}`}
+        >
+          <PortFolio />
+        </motion.section>
+
+        <motion.section
+          id="services"
+          ref={servicesRef}
+          animate={servicesControls}
+          initial={animations.fadeOut}
+          className={`p-6 ${activeTab === "services" ? "" : "hidden"}`}
+        >
+          <div>
+            <Services />
           </div>
         </motion.section>
-      </div>
+
+        <motion.section
+          id="testimonial"
+          ref={testimonialRef}
+          animate={testimonialControls}
+          initial={animations.fadeOut}
+          className={`p-6 ${activeTab === "testimonial" ? "" : "hidden"}`}
+        >
+          <div>
+            <Testimonial />
+          </div>
+        </motion.section>
+
+        <motion.section
+          id="contact"
+          ref={contactRef}
+          animate={contactControls}
+          initial={animations.fadeOut}
+          className={`p-6 ${activeTab === "contact" ? "" : "hidden"}`}
+        >
+          <Contact />
+        </motion.section>
+      </main>
     </div>
   );
 }
