@@ -37,9 +37,9 @@ const tabItems = [
     id: "testimonial",
     label: "Testimonial",
     icon: <FaAddressCard />,
-    link: "/",
+    link: "/testimonial",
   },
-  { id: "contact", label: "Contact", icon: <FaPhoneAlt />, link: "/" },
+  { id: "contact", label: "Contact", icon: <FaPhoneAlt />, link: "/contact" },
 ];
 
 const animations = {
@@ -182,10 +182,8 @@ export default function Layout({ children }) {
   ]);
 
   const socialMedia = [
-    { icon: <FaFacebookF />, url: "#" },
-    { icon: <FaTwitter />, url: "#" },
-    { icon: <FaLinkedinIn />, url: "#" },
-    { icon: <FaGithub />, url: "#" },
+    { icon: <FaLinkedinIn />, url: "https://www.linkedin.com/in/aman-shukla-107674247/" },
+    { icon: <FaGithub />, url: "https://github.com/ashukla333" },
   ];
   console.log(String(activeTab) == String(Router.asPath));
 
