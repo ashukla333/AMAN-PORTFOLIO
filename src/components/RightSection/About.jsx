@@ -14,14 +14,14 @@ import {
 const About = () => {
   return (
     <motion.div
-      className="flex flex-col md:flex-row items-center md:flex-1 md:items-start bg-gradient-to-r from-gray-50 to-gray-100 p-8 rounded-lg shadow-xl"
+      className="flex flex-col md:flex-row items-center md:flex-1 md:items-start bg-gradient-to-r from-gray-50 to-gray-100 p-8 rounded-lg "
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
       {/* Left side - Profile Picture */}
       <motion.div
-        className="flex-[0.4] mb-4 md:mb-0 md:mr-8"
+        className="flex-[0.4] mb-4 md:w-[500px] md:h-[300px] h-[100px] w-full md:mb-0 md:mr-8"
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.6 }}
@@ -29,7 +29,7 @@ const About = () => {
         <Image
           src="/amanProfile.jpeg" // Replace with your profile image path
           alt="Profile Picture"
-          className="rounded-sm md:w-[500px] hover-effect h-full w-full hover:shadow-lg transition-shadow duration-300 ease-in-out object-cover md:h-[300px]"
+          className="rounded-sm md:w-[500px] hover-effect h-[150px] w-full hover:shadow-lg transition-shadow duration-300 ease-in-out object-cover md:h-[300px]"
           width={1000}
           height={1000}
         />
