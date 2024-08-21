@@ -1,10 +1,10 @@
-import HomePage from "@/components/RightSection/HomePage";
+import Skills from "@/components/RightSection/Skills";
 import React from "react";
 
 const index = () => {
   return (
     <div>
-      <HomePage />
+      <Skills />
     </div>
   );
 };

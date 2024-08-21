@@ -14,7 +14,11 @@ const titleVariants = {
 };
 
 const buttonVariants = {
-  hover: { scale: 1.1, rotate: 3, boxShadow: "0px 6px 30px rgba(0, 0, 0, 0.3)" },
+  hover: {
+    scale: 1.1,
+    rotate: 3,
+    boxShadow: "0px 6px 30px rgba(0, 0, 0, 0.3)",
+  },
   tap: { scale: 0.95 },
 };
 
@@ -24,11 +28,11 @@ const HomePage = () => {
       {/* Background Image */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
-          src="/pc.jpg" // Example black and white coding image URL
+          src="/amanProfile.jpeg" // Example black and white coding image URL
           alt="Background"
-          layout="fill"
-          objectFit="cover"
-          className="w-full h-full brightness-50"
+          height={1000}
+          width={1000}
+          className="w-full h-full object-cover brightness-50"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-50"></div>
       </div>
@@ -36,7 +40,7 @@ const HomePage = () => {
       {/* Foreground Content */}
       <div className="relative z-10 uppercase text-center p-8 bg-opacity-60 rounded-lg shadow-lg">
         <motion.h1
-          className="text-5xl font-bold mb-4"
+          className="text-5xl font-bold text-[#86C232] mb-4"
           initial="hidden"
           animate="visible"
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -74,7 +78,7 @@ const HomePage = () => {
         >
           <motion.a
             href="#contact"
-            className="flex items-center px-8 py-4 text-base font-semibold text-white bg-black rounded shadow-lg hover:bg-gray-800 transition duration-300"
+            className="flex items-center px-8 py-4 text-base font-semibold text-white  drop-shadow-lg bg-[#3eb489] rounded-tl-md rounded-br-md shadow-lg hover:bg-[#86C232] transition duration-300"
             whileHover={buttonVariants.hover}
             whileTap={buttonVariants.tap}
           >
@@ -82,33 +86,31 @@ const HomePage = () => {
             <FaArrowRight className="text-xl" />
           </motion.a>
         </motion.div>
-        
-      
       </div>
-        {/* Additional Creative Element */}
+      {/* Additional Creative Element */}
+      <motion.div
+        className="absolute bottom-2 right-2 hidden md:flex md:flex-row  flex-col items-center  gap-2"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 1.5 }}
+      >
         <motion.div
-          className="absolute bottom-2 right-2 hidden md:flex md:flex-row  flex-col items-center  gap-2"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
+          className="bg-[#86C232] animate-pulse text-white px-4 py-2 rounded-full shadow-md text-sm"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 1.7 }}
         >
-          <motion.div
-            className="bg-black animate-pulse text-white px-4 py-2 rounded-full shadow-md text-sm"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 1.7 }}
-          >
-            Explore More
-          </motion.div>
-          <motion.div
-            className="bg-red-500 text-white animate-bounce bg-gradient-to-r from-amber-400  to-purple-500 px-4 py-2 rounded-full shadow-md text-sm"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 1.9 }}
-          >
-            View Projects
-          </motion.div>
+          Explore More
         </motion.div>
+        <motion.div
+          className="bg-red-500 text-white animate-bounce bg-gradient-to-r from-amber-400  to-purple-500 px-4 py-2 rounded-full shadow-md text-sm"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 1.9 }}
+        >
+          View Projects
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

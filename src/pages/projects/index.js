@@ -1,10 +1,10 @@
-import HomePage from "@/components/RightSection/HomePage";
+import Portfolio from "@/components/RightSection/PortFolio";
 import React from "react";
 
 const index = () => {
   return (
     <div>
-      <HomePage />
+      <Portfolio />
     </div>
   );
 };
