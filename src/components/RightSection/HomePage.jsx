@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa"; // Import the icon from react-icons
+import { useRouter } from "next/router";
 
 const textVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -22,7 +23,10 @@ const buttonVariants = {
   tap: { scale: 0.95 },
 };
 
+
+
 const HomePage = () => {
+  const router = useRouter();
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-r from-amber-200 via-red-100 to-gray-200 text-white overflow-hidden">
       {/* Background Image */}
@@ -77,8 +81,11 @@ const HomePage = () => {
           variants={textVariants}
         >
           <motion.a
-            href="#contact"
-            className="flex items-center px-8 py-4 text-base font-semibold text-white  drop-shadow-lg bg-[#3eb489] rounded-tl-md rounded-br-md shadow-lg hover:bg-[#86C232] transition duration-300"
+           
+            onClick={() => {
+              router.push("/contact");
+            }}
+            className="flex items-center px-8 py-4 cursor-pointer text-base font-semibold text-white  drop-shadow-lg bg-[#3eb489] rounded-tl-md rounded-br-md shadow-lg hover:bg-[#86C232] transition duration-300"
             whileHover={buttonVariants.hover}
             whileTap={buttonVariants.tap}
           >
@@ -95,7 +102,10 @@ const HomePage = () => {
         transition={{ duration: 0.8, delay: 1.5 }}
       >
         <motion.div
-          className="bg-[#86C232] animate-pulse text-white px-4 py-2 rounded-full shadow-md text-sm"
+          onClick={() => {
+            router.push("/about");
+          }}
+          className="bg-[#86C232] animate-pulse cursor-pointer text-white px-4 py-2 rounded-full shadow-md text-sm"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 1.7 }}
@@ -103,7 +113,10 @@ const HomePage = () => {
           Explore More
         </motion.div>
         <motion.div
-          className="bg-red-500 text-white animate-bounce bg-gradient-to-r from-amber-400  to-purple-500 px-4 py-2 rounded-full shadow-md text-sm"
+          onClick={() => {
+            router.push("/projects");
+          }}
+          className="bg-red-500 text-white animate-bounce cursor-pointer bg-gradient-to-r from-amber-400  to-purple-500 px-4 py-2 rounded-full shadow-md text-sm"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 1.9 }}

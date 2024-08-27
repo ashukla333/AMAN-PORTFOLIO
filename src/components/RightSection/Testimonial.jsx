@@ -4,33 +4,33 @@ import { FaStar } from "react-icons/fa";
 
 const testimonials = [
   {
-    name: "John Doe",
+    name: "Abhishek Yadav",
     feedback:
       "Great work! The project was completed on time and exceeded my expectations.",
     rating: 5,
     image: "/frontend_developer.jpg",
   },
   {
-    name: "Jane Smith",
+    name: "Adarsh S.",
     feedback: "Amazing attention to detail and very responsive throughout.",
     rating: 4,
     image: "/frontend_developer.jpg",
   },
   {
-    name: "Michael Johnson",
+    name: "anonymous",
     feedback: "I'm extremely satisfied with the work delivered.",
     rating: 5,
     image: "/frontend_developer.jpg",
   },
   {
-    name: "Emily Davis",
+    name: "anonymous",
     feedback:
       "A pleasure to work with! The project was delivered on time and was of high quality.",
     rating: 4,
     image: "/frontend_developer.jpg",
   },
   {
-    name: "Robert Wilson",
+    name: "anonymous",
     feedback: "The work was excellent and the communication was top-notch.",
     rating: 5,
     image: "/frontend_developer.jpg",

@@ -46,10 +46,10 @@ const About = () => {
         <p className="md:text-2xl text-lg mb-6 bg-clip-text md:block hidden  text-transparent bg-gradient-to-r from-amber-400 via-red-500 to-pink-500">Frontend Developer</p>
 
         <ul className="space-y-2 text-gray-800">
-          <li>
+          {/* <li>
             <FaBirthdayCake className="inline-block mr-2 text-[#86C232]" />
             <strong>Birthday:</strong> 3rd July 2001
-          </li>
+          </li> */}
           <li>
             <FaBriefcase className="inline-block mr-2 text-[#86C232]" />
             <strong>Experience:</strong> 2 Years
