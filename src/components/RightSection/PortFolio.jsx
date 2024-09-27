@@ -58,7 +58,7 @@ const projects = [
     image: "/demos.jpg", // Replace with your image path
     // link: "#", // Replace with your project link
     // source: "#", // Replace with your source code link
-  }
+  },
 ];
 
 const cardVariants = {
@@ -110,22 +110,26 @@ const Portfolio = () => {
                 {project.description}
               </p>
               <div className="flex justify-between mt-auto">
-                <motion.a
-                  href={project.link}
-                  className="px-2  py-2 bg-[#86C232] text-white lg:text-sm xl:text-lg text-base font-semibold rounded-lg shadow-lg hover:bg-[#3eb489] transition duration-300"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Visit Website
-                </motion.a>
-                <motion.a
-                  href={project.source}
-                  className="px-2  py-2 bg-[#86C232]  lg:text-sm xl:text-lg text-base text-white font-semibold rounded-lg shadow-lg hover:bg-[#3eb489] transition duration-300"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Source Code
-                </motion.a>
+                {project.link && (
+                  <motion.a
+                    href={project.link}
+                    className="px-2  py-2 bg-[#86C232] text-white lg:text-sm xl:text-lg text-base font-semibold rounded-lg shadow-lg hover:bg-[#3eb489] transition duration-300"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Visit Website
+                  </motion.a>
+                )}
+                {project.source && (
+                  <motion.a
+                    href={project.source}
+                    className="px-2  py-2 bg-[#86C232]  lg:text-sm xl:text-lg text-base text-white font-semibold rounded-lg shadow-lg hover:bg-[#3eb489] transition duration-300"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Source Code
+                  </motion.a>
+                )}
               </div>
             </div>
           </motion.div>
