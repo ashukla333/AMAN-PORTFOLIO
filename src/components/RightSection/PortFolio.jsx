@@ -20,53 +20,45 @@ const projects = [
     source: "https://github.com/ashukla33317/shaif-cuisine", // Replace with your source code link
   },
   {
-    title: "PortWala Template",
+    title: "Boppo Technologies Main Website",
     description:
-      "A responsive HTML/CSS template designed with modern web standards and best practices.",
-    image: "/port.png", // Replace with your image path
-    link: "https://ashukla33317.github.io/Portwala-webPage/", // Replace with your project link
-    source: "https://github.com/ashukla33317/Portwala-webPage", // Replace with your source code link
+      "Designed and developed the user interface using Next.js and Tailwind CSS for a modern, responsive, and visually appealing website. The site delivers a seamless user experience across devices, optimizing performance and scalability while adhering to best practices in web design and development",
+    image: "/boppotech.png", // Replace with your image path
+    link: "https://www.boppotechnologies.com/", // Replace with your project link
+    // source: "https://github.com/ashukla33317/Portwala-webPage", // Replace with your source code link
   },
   {
-    title: "HTML/CSS Template",
+    title: "RangePlus Website & Dashboard (E-Commerce)",
     description:
-      "A responsive HTML/CSS template designed with modern web standards and best practices.",
-    image: "/demos.jpg", // Replace with your image path
-    link: "#", // Replace with your project link
-    source: "#", // Replace with your source code link
+      "Developed a scalable e-commerce platform featuring a user-friendly interface for browsing and purchasing products. The admin dashboard allows seamless management of products, orders, users, and sales analytics. Integrated secure payment gateways and third-party APIs to enhance user experience and streamline business operations.",
+    image: "/rangeplus1.png", // Replace with your image path
+    link: "https://stage.rangeplus.com", // Replace with your project link
+    // source: "#", // Replace with your source code link
   },
   {
-    title: "E-Commerce Application",
+    title: "Friday Release Website",
     description:
-      "A full-fledged e-commerce store built with the MERN stack, featuring product listings, shopping cart, and payment integration.",
-    image: "/demos.jpg", // Replace with your image path
-    link: "#", // Replace with your project link
-    source: "#", // Replace with your source code link
+      "Friday Release Website Developed the user interface using HTML and CSS for a responsive and visually appealing website. Focused on clean design principles, ensuring an intuitive and seamless user experience across all devices, with attention to detail in layout, typography, and visual hierarchy.",
+    image: "/fridayRelease.png", // Replace with your image path
+    link: "https://www.fridayrelease.com", // Replace with your project link
+    // source: "#", // Replace with your source code link
   },
   {
-    title: "HTML/CSS Template",
+    title: "Dream & Discover Blog Website",
     description:
-      "A responsive HTML/CSS template designed with modern web standards and best practices.",
-    image: "/demos.jpg", // Replace with your image path
-    link: "#", // Replace with your project link
-    source: "#", // Replace with your source code link
+      " Developed a feature-rich blog platform using Next.js , Material UI , and Tailwind CSS for a clean, responsive design. Integrated secure user authentication with the MERN stack (MongoDB, Express, React, Node.js) to allow users to register, log in, and manage their profiles. The platform offers a seamless user experience with a modern and scalable interface.",
+    image: "/blogPage1.png", // Replace with your image path
+    link: "https://blog-mern-nu-one.vercel.app ", // Replace with your project link
+    // source: "#", // Replace with your source code link
   },
   {
-    title: "E-Commerce Application",
+    title: "Boppo Go E-Commerce Website",
     description:
-      "A full-fledged e-commerce store built with the MERN stack, featuring product listings, shopping cart, and payment integration.",
+      "Built a dynamic and scalable e-commerce platform using Next.js . The website features optimized product listings, a responsive design, and a seamless user experience across devices. Focused on performance, speed, and modern web development practices to ensure a smooth shopping experience for users. ",
     image: "/demos.jpg", // Replace with your image path
-    link: "#", // Replace with your project link
-    source: "#", // Replace with your source code link
-  },
-  {
-    title: "HTML/CSS Template",
-    description:
-      "A responsive HTML/CSS template designed with modern web standards and best practices.",
-    image: "/demos.jpg", // Replace with your image path
-    link: "#", // Replace with your project link
-    source: "#", // Replace with your source code link
-  },
+    // link: "#", // Replace with your project link
+    // source: "#", // Replace with your source code link
+  }
 ];
 
 const cardVariants = {

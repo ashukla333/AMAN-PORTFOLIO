@@ -5,7 +5,7 @@ import { FiDownload } from "react-icons/fi"; // Importing an icon for the button
 const Resume = () => {
   return (
     <motion.div
-      className="p-6"
+      className="p-6 h-screen"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
@@ -29,7 +29,7 @@ const Resume = () => {
       {/* Download Button */}
       <div className="mt-8 flex justify-center">
         <motion.a
-          href="/resume.pdf" // Link to your resume file
+          href="/aman_s_resume.pdf" 
           download
           className="flex items-center px-6 py-3 hover:bg-[#3eb489] text-white font-semibold rounded-lg shadow-lg bg-[#86C232] transition duration-300"
           whileHover={{ scale: 1.05 }}
