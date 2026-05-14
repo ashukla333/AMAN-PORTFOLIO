@@ -7,30 +7,17 @@ import { FaArrowRight } from "react-icons/fa";
 
 // Newer sites (top of list) — built at Realatte Ventures
 const realestateSites = [
- 
   {
-    title: "Shreenaman Group",
+    title: "JP Group",
     subtitle: "Realty / Corporate",
     category: "Next.js · Realty",
     description:
-      "Corporate realty website built with Next.js, Strapi CMS and motion-driven UI to showcase projects.",
-    link: "https://shreenamangroup.com",
-    year: "2025",
+      "Real-estate corporate portal with project listings, contact funnels and CMS-managed content.",
+    link: "https://jpgrp.in/",
+    year: "2024",
     role: "Frontend",
-    stack: ["Next.js", "Tailwind", "GSAP"],
-    accent: "SN",
-  },
-  {
-    title: "24High",
-    subtitle: "Realty / Project",
-    category: "Next.js · Project Site",
-    description:
-      "Project landing experience for a luxury real-estate development with interactive sections and lead capture.",
-    link: "https://24high.in/",
-    year: "2025",
-    role: "Frontend",
-    stack: ["Next.js", "Tailwind", "Framer Motion"],
-    accent: "24",
+    stack: ["Next.js", "Tailwind"],
+    accent: "JP",
   },
   {
     title: "Shree Sonigara",
@@ -68,18 +55,7 @@ const realestateSites = [
     stack: ["Next.js", "Tailwind"],
     accent: "IA",
   },
-  {
-    title: "JP Group",
-    subtitle: "Realty / Corporate",
-    category: "Next.js · Realty",
-    description:
-      "Real-estate corporate portal with project listings, contact funnels and CMS-managed content.",
-    link: "https://jpgrp.in/",
-    year: "2024",
-    role: "Frontend",
-    stack: ["Next.js", "Tailwind"],
-    accent: "JP",
-  },
+
   {
     title: "Raheja Universal",
     subtitle: "Realty / Corporate",
@@ -116,7 +92,7 @@ const realestateSites = [
     stack: ["Next.js", "Tailwind"],
     accent: "VTP",
   },
-   {
+  {
     title: "Diamond Group",
     subtitle: "Realty / Corporate",
     category: "Next.js · Realty",
@@ -139,6 +115,30 @@ const realestateSites = [
     role: "Frontend Lead",
     stack: ["Next.js", "Tailwind", "Strapi"],
     accent: "SG",
+  },
+  {
+    title: "Shreenaman Group",
+    subtitle: "Realty / Corporate",
+    category: "Next.js · Realty",
+    description:
+      "Corporate realty website built with Next.js, Strapi CMS and motion-driven UI to showcase projects.",
+    link: "https://shreenamangroup.com",
+    year: "2025",
+    role: "Frontend",
+    stack: ["Next.js", "Tailwind", "GSAP"],
+    accent: "SN",
+  },
+  {
+    title: "24High",
+    subtitle: "Realty / Project",
+    category: "Next.js · Project Site",
+    description:
+      "Project landing experience for a luxury real-estate development with interactive sections and lead capture.",
+    link: "https://24high.in/",
+    year: "2025",
+    role: "Frontend",
+    stack: ["Next.js", "Tailwind", "Framer Motion"],
+    accent: "24",
   },
 ];
 
@@ -264,7 +264,12 @@ const ProjectVisual = ({ p }) => {
       />
     );
   }
-  return <FallbackVisual accent={p.accent || p.title.slice(0, 2).toUpperCase()} title={p.subtitle || p.title} />;
+  return (
+    <FallbackVisual
+      accent={p.accent || p.title.slice(0, 2).toUpperCase()}
+      title={p.subtitle || p.title}
+    />
+  );
 };
 
 const Portfolio = () => {
@@ -276,7 +281,12 @@ const Portfolio = () => {
     filter === "All"
       ? allProjects
       : allProjects.filter((p) => {
-          if (filter === "Realty") return p.category.includes("Realty") || p.category.includes("Project Site") || p.category.includes("Corporate");
+          if (filter === "Realty")
+            return (
+              p.category.includes("Realty") ||
+              p.category.includes("Project Site") ||
+              p.category.includes("Corporate")
+            );
           if (filter === "Next.js") return p.category.includes("Next.js");
           if (filter === "MERN") return p.category.includes("MERN");
           if (filter === "Mobile") return p.category.includes("Native");
@@ -318,7 +328,7 @@ const Portfolio = () => {
             duration: 0.9,
             ease: "power3.out",
             scrollTrigger: { trigger: card, start: "top 88%" },
-          }
+          },
         );
       });
     }, ref);
@@ -343,7 +353,10 @@ const Portfolio = () => {
           </span>
           <span className="mask">
             <span className="pf-title block">
-              <span className="font-serif-display italic font-normal text-white/40 normal-case">with </span>care.
+              <span className="font-serif-display italic font-normal text-white/40 normal-case">
+                with{" "}
+              </span>
+              care.
             </span>
           </span>
         </h1>
@@ -531,7 +544,10 @@ const Portfolio = () => {
         {/* Footer cue */}
         <div className="pf-anim mt-16 flex items-center justify-between pt-8 border-t border-white/[0.06] font-mono text-[10px] tracking-[0.25em] text-white/40">
           <span>END OF CHAPTER 04</span>
-          <Link href="/testimonial" className="link-underline inline-flex items-center gap-2">
+          <Link
+            href="/testimonial"
+            className="link-underline inline-flex items-center gap-2"
+          >
             NEXT — PRAISE (05) <FaArrowRight />
           </Link>
         </div>
