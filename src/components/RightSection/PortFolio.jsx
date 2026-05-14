@@ -7,30 +7,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 // Newer sites (top of list) — built at Realatte Ventures
 const realestateSites = [
-  {
-    title: "Diamond Group",
-    subtitle: "Realty / Corporate",
-    category: "Next.js · Realty",
-    description:
-      "Premium real-estate corporate website with modern UI, project showcases and integrated CMS-driven content.",
-    link: "https://daimondgroup.com",
-    year: "2025",
-    role: "Frontend Lead",
-    stack: ["Next.js", "Tailwind", "GSAP"],
-    accent: "DG",
-  },
-  {
-    title: "Salarpuria Group",
-    subtitle: "Realty / Corporate",
-    category: "Next.js · Realty",
-    description:
-      "Corporate real-estate website with project portfolios, dynamic CMS and high-performance rendering.",
-    link: "https://salaruriagroup.com",
-    year: "2025",
-    role: "Frontend Lead",
-    stack: ["Next.js", "Tailwind", "Strapi"],
-    accent: "SG",
-  },
+ 
   {
     title: "Shreenaman Group",
     subtitle: "Realty / Corporate",
@@ -138,6 +115,30 @@ const realestateSites = [
     role: "Frontend",
     stack: ["Next.js", "Tailwind"],
     accent: "VTP",
+  },
+   {
+    title: "Diamond Group",
+    subtitle: "Realty / Corporate",
+    category: "Next.js · Realty",
+    description:
+      "Premium real-estate corporate website with modern UI, project showcases and integrated CMS-driven content.",
+    link: "https://daimondgroup.com",
+    year: "2025",
+    role: "Frontend Lead",
+    stack: ["Next.js", "Tailwind", "GSAP"],
+    accent: "DG",
+  },
+  {
+    title: "Salarpuria Group",
+    subtitle: "Realty / Corporate",
+    category: "Next.js · Realty",
+    description:
+      "Corporate real-estate website with project portfolios, dynamic CMS and high-performance rendering.",
+    link: "https://salaruriagroup.com",
+    year: "2025",
+    role: "Frontend Lead",
+    stack: ["Next.js", "Tailwind", "Strapi"],
+    accent: "SG",
   },
 ];
 
