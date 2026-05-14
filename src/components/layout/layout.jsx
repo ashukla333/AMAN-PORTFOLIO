@@ -1,271 +1,292 @@
 import Head from "next/head";
-import { useState, useEffect } from "react";
-import { Inter } from "next/font/google";
-import { motion, useAnimation } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import { gsap } from "gsap";
 import {
-  FaUser,
-  FaProjectDiagram,
-  FaListAlt,
-  FaCode,
-  FaHome,
-  FaBriefcase,
-  FaAddressCard,
-  FaPhoneAlt,
-  FaRegEnvelope,
-  FaFacebookF,
-  FaTwitter,
   FaLinkedinIn,
   FaGithub,
+  FaTwitter,
+  FaInstagram,
 } from "react-icons/fa";
 
-import { useInView } from "react-intersection-observer";
-import Image from "next/image";
-import { useRouter } from "next/router";
-
 const tabItems = [
-  { id: "home", label: "Home", icon: <FaHome />, link: "/" },
-  { id: "about", label: "About", icon: <FaUser />, link: "/about" },
-  { id: "skills", label: "Skills", icon: <FaCode />, link: "/skills" },
-  { id: "resume", label: "Resume", icon: <FaBriefcase />, link: "/resume" },
-  {
-    id: "portfolio",
-    label: "Projects",
-    icon: <FaProjectDiagram />,
-    link: "/projects",
-  },
-  {
-    id: "testimonial",
-    label: "Testimonial",
-    icon: <FaAddressCard />,
-    link: "/testimonial",
-  },
-  { id: "contact", label: "Contact", icon: <FaPhoneAlt />, link: "/contact" },
+  { id: "home", label: "Index", link: "/", num: "00" },
+  { id: "about", label: "About", link: "/about", num: "01" },
+  { id: "skills", label: "Skills", link: "/skills", num: "02" },
+  { id: "resume", label: "Resume", link: "/resume", num: "03" },
+  { id: "portfolio", label: "Work", link: "/projects", num: "04" },
+  { id: "testimonial", label: "Praise", link: "/testimonial", num: "05" },
+  { id: "contact", label: "Contact", link: "/contact", num: "06" },
 ];
 
-const animations = {
-  fadeIn: { opacity: 1, transition: { duration: 0.5 } },
-  fadeOut: { opacity: 0, transition: { duration: 0.5 } },
-};
-
 export default function Layout({ children }) {
-  const Router = useRouter();
-  const [activeTab, setActiveTab] = useState("");
-  console.log({ Router });
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState("home");
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [time, setTime] = useState("");
+  const loaderRef = useRef(null);
 
   useEffect(() => {
-    // Set the active tab based on the router's path
-    const currentPath = Router.asPath;
-    const matchingTab = tabItems.find((tab) => tab.link === currentPath);
-    if (matchingTab) {
-      setActiveTab(matchingTab.id);
-    }
-  }, [Router.asPath]); // Run the effect whenever the path changes
+    const match = tabItems.find((t) => t.link === router.asPath);
+    if (match) setActiveTab(match.id);
+  }, [router.asPath]);
+
+  useEffect(() => {
+    const tick = () => {
+      const d = new Date();
+      const opts = { timeZone: "Asia/Kolkata", hour12: false, hour: "2-digit", minute: "2-digit" };
+      setTime(d.toLocaleTimeString("en-GB", opts));
+    };
+    tick();
+    const id = setInterval(tick, 30000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (!loaderRef.current) return;
+    const tl = gsap.timeline();
+    tl.to(".loader-bar", { width: "100%", duration: 1, ease: "power3.inOut" })
+      .to(".loader-count", {
+        textContent: 100,
+        duration: 1,
+        ease: "power3.inOut",
+        snap: { textContent: 1 },
+      }, "<")
+      .to(".loader-screen", {
+        y: "-100%",
+        duration: 0.9,
+        ease: "power4.inOut",
+      }, "+=0.1");
+  }, []);
 
   const handleTabClick = (tab) => {
-    Router.push(tab.link);
-    setActiveTab(tab.id); // Update activeTab to the clicked tab's ID
+    router.push(tab.link);
+    setActiveTab(tab.id);
+    setMobileOpen(false);
   };
 
-  const profileControls = useAnimation();
-  const homeControls = useAnimation();
-  const aboutControls = useAnimation();
-  const skillsControls = useAnimation();
-  const resumeControls = useAnimation();
-  const portfolioControls = useAnimation();
-  const servicesControls = useAnimation();
-  const testimonialControls = useAnimation();
-  const contactControls = useAnimation();
-
-  const { ref: homeRef, inView: homeInView } = useInView({ triggerOnce: true });
-  const { ref: aboutRef, inView: aboutInView } = useInView({
-    triggerOnce: true,
-  });
-  const { ref: skillsRef, inView: skillsInView } = useInView({
-    triggerOnce: true,
-  });
-  const { ref: resumeRef, inView: resumeInView } = useInView({
-    triggerOnce: true,
-  });
-  const { ref: portfolioRef, inView: portfolioInView } = useInView({
-    triggerOnce: true,
-  });
-  const { ref: servicesRef, inView: servicesInView } = useInView({
-    triggerOnce: true,
-  });
-  const { ref: testimonialRef, inView: testimonialInView } = useInView({
-    triggerOnce: true,
-  });
-  const { ref: contactRef, inView: contactInView } = useInView({
-    triggerOnce: true,
-  });
-
-  useEffect(() => {
-    profileControls.start(homeInView ? animations.fadeIn : animations.fadeOut);
-    homeControls.start(homeInView ? animations.fadeIn : animations.fadeOut);
-    aboutControls.start(aboutInView ? animations.fadeIn : animations.fadeOut);
-    skillsControls.start(skillsInView ? animations.fadeIn : animations.fadeOut);
-    resumeControls.start(resumeInView ? animations.fadeIn : animations.fadeOut);
-    portfolioControls.start(
-      portfolioInView ? animations.fadeIn : animations.fadeOut
-    );
-    servicesControls.start(
-      servicesInView ? animations.fadeIn : animations.fadeOut
-    );
-    testimonialControls.start(
-      testimonialInView ? animations.fadeIn : animations.fadeOut
-    );
-    contactControls.start(
-      contactInView ? animations.fadeIn : animations.fadeOut
-    );
-  }, [
-    homeInView,
-    aboutInView,
-    skillsInView,
-    resumeInView,
-    portfolioInView,
-    servicesInView,
-    testimonialInView,
-    contactInView,
-    homeControls,
-    aboutControls,
-    skillsControls,
-    resumeControls,
-    portfolioControls,
-    servicesControls,
-    testimonialControls,
-    contactControls,
-    profileControls,
-  ]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const homePos = homeRef.current?.getBoundingClientRect().top;
-      const aboutPos = aboutRef.current?.getBoundingClientRect().top;
-      const skillsPos = skillsRef.current?.getBoundingClientRect().top;
-      const resumePos = resumeRef.current?.getBoundingClientRect().top;
-      const portfolioPos = portfolioRef.current?.getBoundingClientRect().top;
-      const servicesPos = servicesRef.current?.getBoundingClientRect().top;
-      const testimonialPos =
-        testimonialRef.current?.getBoundingClientRect().top;
-      const contactPos = contactRef.current?.getBoundingClientRect().top;
-
-      if (contactPos < window.innerHeight && contactPos > 0) {
-        setActiveTab("contact");
-      } else if (testimonialPos < window.innerHeight && testimonialPos > 0) {
-        setActiveTab("testimonial");
-      } else if (servicesPos < window.innerHeight && servicesPos > 0) {
-        setActiveTab("services");
-      } else if (portfolioPos < window.innerHeight && portfolioPos > 0) {
-        setActiveTab("portfolio");
-      } else if (resumePos < window.innerHeight && resumePos > 0) {
-        setActiveTab("resume");
-      } else if (skillsPos < window.innerHeight && skillsPos > 0) {
-        setActiveTab("skills");
-      } else if (aboutPos < window.innerHeight && aboutPos > 0) {
-        setActiveTab("about");
-      } else if (homePos < window.innerHeight && homePos > 0) {
-        setActiveTab("home");
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [
-    homeRef,
-    aboutRef,
-    skillsRef,
-    resumeRef,
-    portfolioRef,
-    servicesRef,
-    testimonialRef,
-    contactRef,
-  ]);
-
-  const socialMedia = [
+  const socials = [
     { icon: <FaLinkedinIn />, url: "https://www.linkedin.com/in/aman-shukla-107674247/" },
     { icon: <FaGithub />, url: "https://github.com/ashukla333" },
+    { icon: <FaTwitter />, url: "#" },
+    { icon: <FaInstagram />, url: "#" },
   ];
-  console.log(String(activeTab) == String(Router.asPath));
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen bg-[#050505] text-[#f5f5f5]">
       <Head>
-        <title>PORTFOLIO AMAN :)</title>
-        <meta name="description" content="Generated by create next app" />
+        <title>Aman Shukla — Frontend Developer · Portfolio ’26</title>
+        <meta name="description" content="Aman Shukla — Frontend Developer specializing in React, Next.js, and modern motion design." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {/* Preloader */}
       <div
-        className={`bg-white playfair-display !text-[#86C232] min-h-screen flex`}
+        ref={loaderRef}
+        className="loader-screen fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center"
       >
-        {/* Left Side Tab Bar */}
-        <aside className="w-[18%]  overflow-y-scroll bg-[#222629] scrollbar-hide  text-gray-800 border-r-2 border-black  h-screen fixed top-0 left-0 flex flex-col items-center py-4">
-          {/* Profile Section */}
-          <motion.section
-            id="profile"
-            ref={homeRef}
-            animate={homeControls}
-            initial={animations.fadeOut}
-            className="flex flex-col gap-2"
-          >
-            <div className="flex flex-col gap-3 md:flex-col items-center">
-              <Image
-                src="/amanProfile.jpeg"
-                alt="Profile Picture"
-                width={1000}
-                height={1000}
-                className="rounded-full h-20 hover-effect md:block hidden w-20 border-2 border-gray-800 object-cover"
-              />
-              <h1 className="text-xl font-bold !text-[#86C232]  md:block hidden">
-                Aman Shukla
-              </h1>
-              <span className="bg-clip-text md:block hidden md:text-sm text-base lg:text-lg animate-pulse text-transparent bg-gradient-to-r from-amber-400 via-red-500 to-pink-500">
-                Frontend Developer
-              </span>
-            </div>
-            <div className="flex md:flex-row flex-col gap-4 md:mt-4 justify-center">
-              {socialMedia.map((item, index) => (
-                <motion.a
-                  key={index}
-                  href={item.url}
-                  whileHover={{ scale: 1.2, color: "#3eb489" }}
-                  className="text-gray-200 text-xl"
-                >
-                  {item.icon}
-                </motion.a>
-              ))}
-            </div>
-          </motion.section>
+        <div className="font-display text-7xl md:text-9xl font-bold tracking-tighter mb-10">
+          AS<span className="font-serif-display italic text-white/40">/</span>
+        </div>
+        <div className="w-64 md:w-96 h-px bg-white/10 relative overflow-hidden">
+          <div className="loader-bar absolute left-0 top-0 h-full bg-white w-0"></div>
+        </div>
+        <div className="mt-5 font-mono text-[10px] tracking-[0.3em] text-white/40">
+          LOADING PORTFOLIO · <span className="loader-count">0</span>%
+        </div>
+      </div>
 
-          {/* Tab Navigation */}
-          <nav className="flex flex-col gap-4 mt-8">
-            {tabItems.map((tab) => (
-              <motion.button
+      {/* Top Navigation */}
+      <header className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl bg-[#050505]/80 border-b border-white/[0.06]">
+        <div className="flex items-center justify-between px-6 md:px-10 h-[68px]">
+          {/* Monogram */}
+          <button
+            onClick={() => handleTabClick(tabItems[0])}
+            className="flex items-center gap-3 group"
+          >
+            <span className="w-10 h-10 border border-white/30 flex items-center justify-center font-serif-display font-bold italic text-lg group-hover:bg-white group-hover:text-black transition-all duration-500">
+              A
+            </span>
+            <span className="hidden sm:flex flex-col leading-tight">
+              <span className="font-display font-semibold text-sm tracking-tight">
+                AMAN SHUKLA
+              </span>
+              <span className="font-mono text-[9px] tracking-[0.25em] text-white/40">
+                FRONTEND · DEVELOPER
+              </span>
+            </span>
+          </button>
+
+          {/* Center nav (desktop) */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {tabItems.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTabClick(tab)}
+                  className={`relative px-4 py-2 text-sm font-medium tracking-tight transition-colors duration-300 ${
+                    isActive ? "text-white" : "text-white/50 hover:text-white"
+                  }`}
+                >
+                  <span className="font-mono text-[9px] text-white/30 mr-2">
+                    {tab.num}
+                  </span>
+                  {tab.label}
+                  {isActive && (
+                    <span className="absolute -bottom-[18px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-white"></span>
+                  )}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Right cluster */}
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-white/50">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot"></span>
+              MUMBAI · {time}
+            </div>
+            <button
+              onClick={() => handleTabClick(tabItems[6])}
+              className="hidden md:inline-flex btn-fill items-center gap-2 border border-white/30 px-5 py-2.5 text-sm font-medium hover:border-white"
+            >
+              Let’s talk →
+            </button>
+            {/* Mobile burger */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="lg:hidden flex flex-col gap-1.5 p-2"
+              aria-label="Menu"
+            >
+              <span className={`block w-6 h-px bg-white transition-transform duration-500 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`}></span>
+              <span className={`block w-6 h-px bg-white transition-opacity duration-500 ${mobileOpen ? "opacity-0" : ""}`}></span>
+              <span className={`block w-6 h-px bg-white transition-transform duration-500 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`}></span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile slide menu */}
+      <div
+        className={`fixed inset-0 top-[68px] z-30 bg-[#050505] lg:hidden transition-transform duration-700 ${
+          mobileOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="px-6 py-8">
+          {tabItems.map((tab, i) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
                 key={tab.id}
-                onClick={() => {
-                  handleTabClick(tab);
-                }}
-                className={`flex items-center rounded-sm border  gap-3  font-semibold px-4 py-2 w-full ${
-                  activeTab === tab.id
-                    ? " !text-[#86C232]     bg-transparent"
-                    : "hover:bg-gray-800 text-white  "
+                onClick={() => handleTabClick(tab)}
+                className={`w-full flex items-baseline justify-between py-5 border-b border-white/10 ${
+                  isActive ? "text-white" : "text-white/50"
                 }`}
               >
-                <span>{tab.icon}</span>
-                <span className="md:block text-[13px]   hidden">
-                  {tab.label}
+                <span className="flex items-baseline gap-5">
+                  <span className="font-mono text-[10px] text-white/30">{tab.num}</span>
+                  <span className="font-display font-semibold text-3xl tracking-tight">{tab.label}</span>
                 </span>
-              </motion.button>
-            ))}
-          </nav>
-        </aside>
+                <span className="font-mono text-[10px] text-white/30">→</span>
+              </button>
+            );
+          })}
 
-        {/* Right Side Content */}
-        <main className="w-[82%] ml-auto bg-gray-50 ">
-          <main className="flex-1 bg-gray-100 ">{children}</main>
-        </main>
+          <div className="mt-10 flex flex-wrap gap-3">
+            {socials.map((s, i) => (
+              <a
+                key={i}
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-11 h-11 flex items-center justify-center border border-white/20"
+              >
+                {s.icon}
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
+
+      {/* Main content */}
+      <main className="pt-[68px]">
+        {children}
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-white/[0.06] bg-[#050505]">
+        <div className="px-6 md:px-10 py-12 grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div className="md:col-span-5">
+            <div className="font-display text-4xl md:text-5xl font-bold tracking-tighter leading-none">
+              Have a project?
+              <br />
+              <span className="font-serif-display italic text-white/40">Let’s collaborate.</span>
+            </div>
+            <a
+              href="mailto:amanshukla3747@gmail.com"
+              className="link-underline inline-block mt-6 text-lg"
+            >
+              amanshukla3747@gmail.com
+            </a>
+          </div>
+
+          <div className="md:col-span-3">
+            <div className="font-mono text-[10px] tracking-[0.25em] text-white/40 mb-4">
+              NAVIGATE
+            </div>
+            <ul className="space-y-2 text-sm">
+              {tabItems.map((t) => (
+                <li key={t.id}>
+                  <button
+                    onClick={() => handleTabClick(t)}
+                    className="link-underline text-white/70 hover:text-white"
+                  >
+                    {t.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="md:col-span-2">
+            <div className="font-mono text-[10px] tracking-[0.25em] text-white/40 mb-4">
+              ELSEWHERE
+            </div>
+            <ul className="space-y-2 text-sm">
+              {socials.map((s, i) => (
+                <li key={i}>
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-underline text-white/70 hover:text-white"
+                  >
+                    {["LinkedIn", "GitHub", "Twitter", "Instagram"][i]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="md:col-span-2">
+            <div className="font-mono text-[10px] tracking-[0.25em] text-white/40 mb-4">
+              BASED IN
+            </div>
+            <p className="text-sm text-white/70">
+              Kalyan, Mumbai
+              <br />
+              Maharashtra, India
+            </p>
+          </div>
+        </div>
+
+        <div className="border-t border-white/[0.06] px-6 md:px-10 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 font-mono text-[10px] tracking-[0.25em] text-white/40">
+          <span>© {new Date().getFullYear()} AMAN SHUKLA · ALL RIGHTS RESERVED</span>
+          <span>BUILT WITH NEXT.JS + GSAP + TAILWIND</span>
+        </div>
+      </footer>
     </div>
   );
 }

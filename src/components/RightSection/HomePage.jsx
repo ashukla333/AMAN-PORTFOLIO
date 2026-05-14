@@ -1,130 +1,302 @@
-import React from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { FaArrowRight } from "react-icons/fa"; // Import the icon from react-icons
+import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import { gsap } from "gsap";
+import {
+  FaArrowRight,
+  FaArrowDown,
+  FaReact,
+  FaNodeJs,
+  FaJsSquare,
+} from "react-icons/fa";
+import { SiNextdotjs, SiTailwindcss, SiTypescript, SiMongodb } from "react-icons/si";
 
-const textVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
+const stack = [
+  "REACT.JS",
+  "NEXT.JS",
+  "TYPESCRIPT",
+  "TAILWIND CSS",
+  "GSAP",
+  "FRAMER MOTION",
+  "NODE.JS",
+  "MONGODB",
+  "EXPRESS",
+  "REDUX",
+];
 
-const titleVariants = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: { opacity: 1, scale: 1 },
-};
-
-const buttonVariants = {
-  hover: {
-    scale: 1.1,
-    rotate: 3,
-    boxShadow: "0px 6px 30px rgba(0, 0, 0, 0.3)",
-  },
-  tap: { scale: 0.95 },
-};
-
-
+const services = [
+  { title: "Web Development", desc: "React, Next.js, modern stacks" },
+  { title: "UI Engineering", desc: "Design-system & component work" },
+  { title: "E-commerce", desc: "Storefronts & admin dashboards" },
+  { title: "Motion & UX", desc: "GSAP, Framer Motion, micro-interactions" },
+];
 
 const HomePage = () => {
   const router = useRouter();
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.set(".hero-anim", { y: 60, opacity: 0 });
+      gsap.set(".hero-line", { y: 110, opacity: 0 });
+      gsap.set(".hero-card", { y: 40, opacity: 0 });
+
+      const tl = gsap.timeline({ delay: 1.6 });
+      tl.to(".hero-anim", {
+        y: 0,
+        opacity: 1,
+        stagger: 0.07,
+        duration: 0.8,
+        ease: "power3.out",
+      })
+        .to(
+          ".hero-line",
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.1,
+            duration: 1.1,
+            ease: "power4.out",
+          },
+          "-=0.6"
+        )
+        .to(
+          ".hero-card",
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.08,
+            duration: 0.7,
+            ease: "power3.out",
+          },
+          "-=0.7"
+        );
+
+      gsap.to(".scroll-cue", {
+        y: 8,
+        repeat: -1,
+        yoyo: true,
+        duration: 1.2,
+        ease: "sine.inOut",
+      });
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-r from-amber-200 via-red-100 to-gray-200 text-white overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 overflow-hidden">
-        <Image
-          src="/amanProfile.jpeg" // Example black and white coding image URL
-          alt="Background"
-          height={1000}
-          width={1000}
-          className="w-full h-full object-cover brightness-50"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-50"></div>
+    <section ref={ref} className="relative bg-[#050505] overflow-hidden grain">
+      <div className="absolute inset-0 bg-grid-soft mask-radial pointer-events-none"></div>
+
+      {/* Top status row */}
+      <div className="relative z-10 border-b border-white/[0.06] px-6 md:px-10 py-4 flex flex-wrap items-center justify-between gap-3 font-mono text-[10px] tracking-[0.25em] text-white/50">
+        <div className="hero-anim flex items-center gap-3">
+          <span>EDITION ’26</span>
+          <span className="text-white/20">/</span>
+          <span>VOL.02 — FRONTEND</span>
+        </div>
+        <div className="hero-anim flex items-center gap-3">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot"></span>
+          AVAILABLE FOR HIRE — REMOTE / MUMBAI
+        </div>
       </div>
 
-      {/* Foreground Content */}
-      <div className="relative z-10 uppercase text-center p-8 bg-opacity-60 rounded-lg shadow-lg">
-        <motion.h1
-          className="text-5xl font-bold text-[#86C232] mb-4"
-          initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.8, delay: 0.3 }}
-          variants={titleVariants}
-        >
-          Welcome
-        </motion.h1>
-        <motion.h2
-          className="text-4xl font-semibold mb-6"
-          initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.8, delay: 0.6 }}
-          variants={textVariants}
-        >
-          I am{" "}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-red-500 to-pink-500">
-            Aman Shukla
+      {/* HERO — Massive editorial type */}
+      <div className="relative z-10 px-6 md:px-10 pt-10 md:pt-16 pb-8">
+        <div className="hero-anim section-num mb-8">{"INDEX / 00 — HELLO WORLD"}</div>
+
+        <h1 className="font-display font-bold leading-[0.85] tracking-tighter text-[18vw] sm:text-[14vw] lg:text-[11vw] uppercase">
+          <span className="mask">
+            <span className="hero-line block">Frontend</span>
           </span>
-        </motion.h2>
-        <motion.p
-          className="text-lg mb-6"
-          initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.8, delay: 0.9 }}
-          variants={textVariants}
-        >
-          A passionate Frontend Developer.
-        </motion.p>
-        <motion.div
-          className="flex items-center justify-center"
-          initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.8, delay: 1.2 }}
-          variants={textVariants}
-        >
-          <motion.a
-           
-            onClick={() => {
-              router.push("/contact");
-            }}
-            className="flex items-center px-8 py-4 cursor-pointer text-base font-semibold text-white  drop-shadow-lg bg-[#3eb489] rounded-tl-md rounded-br-md shadow-lg hover:bg-[#86C232] transition duration-300"
-            whileHover={buttonVariants.hover}
-            whileTap={buttonVariants.tap}
-          >
-            <span className="mr-2">Get in Touch</span>
-            <FaArrowRight className="text-xl" />
-          </motion.a>
-        </motion.div>
+          <span className="mask">
+            <span className="hero-line flex items-baseline gap-4 flex-wrap">
+              <span className="font-serif-display italic font-normal text-white/40 normal-case">developer</span>
+              <span className="w-[12vw] h-[2px] bg-white/30 hidden sm:inline-block"></span>
+            </span>
+          </span>
+          <span className="mask">
+            <span className="hero-line block">&amp; builder.</span>
+          </span>
+        </h1>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-12">
+          {/* Intro copy */}
+          <div className="lg:col-span-6 lg:col-start-7">
+            <p className="hero-anim text-white/80 text-base md:text-lg leading-relaxed">
+              I’m <span className="text-white font-semibold">Aman Shukla</span> —
+              a Frontend Engineer &amp; Team Lead based in Mumbai. I build
+              scalable web and mobile applications with{" "}
+              <span className="text-white">React.js, Next.js</span> and React
+              Native — with{" "}
+              <span className="text-white">3.5+ years</span> of shipping
+              production-grade products and 20+ websites.
+            </p>
+
+            <div className="hero-anim mt-7 flex flex-wrap items-center gap-4">
+              <button
+                onClick={() => router.push("/projects")}
+                className="btn-fill inline-flex items-center gap-3 border border-white/30 px-7 py-4 text-sm font-medium tracking-tight"
+              >
+                Browse Selected Work
+                <FaArrowRight />
+              </button>
+              <button
+                onClick={() => router.push("/contact")}
+                className="btn-fill-dark inline-flex items-center gap-3 bg-white text-black px-7 py-4 text-sm font-medium tracking-tight"
+              >
+                Start a Project
+                <FaArrowRight />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      {/* Additional Creative Element */}
-      <motion.div
-        className="absolute bottom-2 right-2 hidden md:flex md:flex-row  flex-col items-center  gap-2"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 1.5 }}
-      >
-        <motion.div
-          onClick={() => {
-            router.push("/about");
-          }}
-          className="bg-[#86C232] animate-pulse cursor-pointer text-white px-4 py-2 rounded-full shadow-md text-sm"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 1.7 }}
+
+      {/* MARQUEE */}
+      <div className="relative z-10 border-y border-white/[0.06] py-6 overflow-hidden mask-fade-edges hero-anim">
+        <div className="flex animate-marquee whitespace-nowrap">
+          {[...stack, ...stack].map((t, i) => (
+            <span
+              key={i}
+              className="font-display text-3xl md:text-5xl px-8 text-white/40 hover:text-white transition-colors"
+            >
+              {t} <span className="text-white/15">✦</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* BENTO GRID — Identity / Stats / Stack / Quote */}
+      <div className="relative z-10 px-6 md:px-10 py-14 grid grid-cols-1 md:grid-cols-12 gap-4">
+        {/* Big monogram card */}
+        <div className="hero-card card md:col-span-5 md:row-span-2 p-8 md:p-10 relative overflow-hidden flex flex-col justify-between min-h-[360px]">
+          <div className="flex items-start justify-between">
+            <div>
+              <div className="section-num">IDENTITY · 01</div>
+              <div className="mt-4 font-display text-xl md:text-2xl tracking-tight">
+                Aman Shukla<span className="font-serif-display italic text-white/40">,</span>
+                <br />
+                <span className="text-white/60">Frontend Developer.</span>
+              </div>
+            </div>
+            <span className="font-mono text-[10px] text-white/40">IN/01</span>
+          </div>
+
+          <div className="relative h-[160px] md:h-[200px] flex items-center justify-center">
+            <span className="mono-letter text-[220px] md:text-[280px] text-white/95 leading-none">A</span>
+            <span className="mono-letter text-[220px] md:text-[280px] text-white/20 leading-none -ml-10">S</span>
+          </div>
+
+          <div className="flex items-end justify-between">
+            <div className="text-xs tracking-[0.25em] text-white/40 font-mono">
+              EST. 2023
+            </div>
+            <div className="text-xs tracking-[0.25em] text-white/40 font-mono">
+              MUMBAI · IND
+            </div>
+          </div>
+        </div>
+
+        {/* Stat cards */}
+        <div className="hero-card card md:col-span-4 p-8 flex flex-col justify-between min-h-[170px]">
+          <div className="section-num">EXPERIENCE · 02</div>
+          <div className="flex items-end gap-3">
+            <span className="metric-num text-7xl md:text-8xl">3.5</span>
+            <span className="font-display text-xl text-white/40 mb-3">+ YRS</span>
+          </div>
+          <div className="text-sm text-white/60">
+            Shipping production apps.
+          </div>
+        </div>
+
+        <div className="hero-card card md:col-span-3 p-8 flex flex-col justify-between min-h-[170px]">
+          <div className="section-num">PROJECTS · 03</div>
+          <div className="flex items-end gap-3">
+            <span className="metric-num text-7xl md:text-8xl">20</span>
+            <span className="font-display text-xl text-white/40 mb-3">+</span>
+          </div>
+          <div className="text-sm text-white/60">Sites &amp; apps delivered.</div>
+        </div>
+
+        {/* Stack icons */}
+        <div className="hero-card card md:col-span-4 p-8 min-h-[170px]">
+          <div className="section-num">PRIMARY STACK · 04</div>
+          <div className="mt-5 grid grid-cols-4 gap-4 text-white/80">
+            {[<FaReact key="r" />, <SiNextdotjs key="n" />, <FaJsSquare key="j" />, <SiTypescript key="t" />, <SiTailwindcss key="tw" />, <FaNodeJs key="no" />, <SiMongodb key="m" />, <span key="g" className="font-mono text-base">GSAP</span>].map(
+              (icon, i) => (
+                <div
+                  key={i}
+                  className="aspect-square flex items-center justify-center border border-white/[0.08] text-2xl hover:bg-white hover:text-black transition-all"
+                >
+                  {icon}
+                </div>
+              )
+            )}
+          </div>
+        </div>
+
+        {/* Quote */}
+        <div className="hero-card card md:col-span-3 p-8 min-h-[170px] flex flex-col justify-between">
+          <div className="section-num">PHILOSOPHY · 05</div>
+          <p className="font-serif-display italic text-lg leading-snug text-white/85">
+            “Detail isn’t a feature — it’s the product.”
+          </p>
+          <div className="font-mono text-[10px] tracking-[0.25em] text-white/40">
+            — AMAN, 2026
+          </div>
+        </div>
+      </div>
+
+      {/* SERVICES STRIP */}
+      <div className="relative z-10 border-t border-white/[0.06] px-6 md:px-10 py-14">
+        <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
+          <div>
+            <div className="section-num">CAPABILITIES / 06</div>
+            <h2 className="font-display font-bold text-4xl md:text-6xl tracking-tighter mt-3">
+              What I do <span className="font-serif-display italic text-white/40">best.</span>
+            </h2>
+          </div>
+          <button
+            onClick={() => router.push("/skills")}
+            className="link-underline text-sm text-white/70 inline-flex items-center gap-2"
+          >
+            See full skill set <FaArrowRight />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06]">
+          {services.map((s, i) => (
+            <div
+              key={i}
+              className="hero-card bg-[#050505] p-8 hover:bg-[#0d0d0d] transition-colors group cursor-default"
+            >
+              <div className="flex items-center justify-between mb-10">
+                <span className="font-mono text-[10px] tracking-[0.25em] text-white/40">
+                  / {String(i + 1).padStart(2, "0")}
+                </span>
+                <FaArrowRight className="text-white/30 group-hover:text-white group-hover:translate-x-1 transition-all" />
+              </div>
+              <h3 className="font-display text-xl md:text-2xl font-semibold leading-tight mb-3">
+                {s.title}
+              </h3>
+              <p className="text-sm text-white/55 leading-relaxed">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Scroll cue */}
+      <div className="relative z-10 px-6 md:px-10 py-8 flex items-center justify-between border-t border-white/[0.06] font-mono text-[10px] tracking-[0.25em] text-white/40">
+        <span className="flex items-center gap-3">
+          <FaArrowDown className="scroll-cue" /> SCROLL TO EXPLORE
+        </span>
+        <button
+          onClick={() => router.push("/about")}
+          className="link-underline"
         >
-          Explore More
-        </motion.div>
-        <motion.div
-          onClick={() => {
-            router.push("/projects");
-          }}
-          className="bg-red-500 text-white animate-bounce cursor-pointer bg-gradient-to-r from-amber-400  to-purple-500 px-4 py-2 rounded-full shadow-md text-sm"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 1.9 }}
-        >
-          View Projects
-        </motion.div>
-      </motion.div>
-    </div>
+          NEXT — ABOUT (01)
+        </button>
+      </div>
+    </section>
   );
 };
 
